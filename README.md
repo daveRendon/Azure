@@ -99,7 +99,7 @@ Podemos crear la imagen para la instancia de la Máquina Virtual en Azure ó pod
 
 Add-AzureDisk -DiskName $DiskName -MediaLocation $AzureVHD -Label $LabelName -OS Windows
 
-# Agregar el VHD como imagen para crear varias VM´s
+# Agregar el VHD como imagen 
 Add-AzureVMImage -ImageName $VMImageName -MediaLocation $AzureVHD -OS Windows
 
  http://wikiazure.com/migrar-vhd-a-azure-con-powershell/
