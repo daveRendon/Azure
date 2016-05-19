@@ -1,0 +1,39 @@
+#************************
+# MIGRATE VHD TO AZURE AND CREATE IMAGE
+# Author:@DaveRndn
+#***********************
+
+#**********************
+# Variables
+#*********************
+$Subscription = "[Nombre de tu suscripción]"
+$SubscriptionId = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+$StorageAccountName = 'kemp360centraldemo'
+$Location = 'West Us'
+$ContainerName = "kemp360centraldemo"
+$LocalVHD = "C:\Users\Dave\KEMP360-VM-v1.3.0-Azure-1294.vhd"
+$AzureVHD = "https://kemp360centraldemo.blob.core.windows.net/kemp360centraldemo/KEMP360-VM-v1.3.0-Azure-1294.vhd"
+$DiskName = 'kemp360centraldemo'
+$LabelName = 'kemp360centraldemo'
+$VMImageName = "kemp360centraldemo-HyperV"
+# *************************************
+# Prepare the access to your subscription
+#**************************************
+#Login to Azure Subscription
+Add-AzureAccount
+# List Available Windows Azure subscriptions
+Get-AzureSubscription | Format-Table -Property SubscriptionName
+#Set default Windows Azure subscription 
+Select-AzureSubscription -SubscriptionId $SubscriptionId -Default
+# Create a new storage account.
+New-AzureStorageAccount –StorageAccountName $StorageAccountName -Location $Location
+# Set a default storage account.
+Set-AzureSubscription -CurrentStorageAccountName $StorageAccountName -SubscriptionName $Subscription
+# Create a new container.
+New-AzureStorageContainer -Name $ContainerName -Permission Off
+# Get default Windows Azure Storage Account.
+Get-AzureStorageAccount | Format-Table -Property Label
+# Identify where the VHD is coming from and where it's going.
+Add-AzureVhd -LocalFilePath $LocalVHD -Destination $AzureVHD
+#If you want to create the image
+Add-AzureVMImage -ImageName $VMImageName -MediaLocation $AzureVHD -OS Windows
