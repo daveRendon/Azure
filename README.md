@@ -102,4 +102,4 @@ Add-AzureDisk -DiskName $DiskName -MediaLocation $AzureVHD -Label $LabelName -OS
 # Agregar el VHD como imagen 
 Add-AzureVMImage -ImageName $VMImageName -MediaLocation $AzureVHD -OS Windows
 
- http://wikiazure.com/migrar-vhd-a-azure-con-powershell/
+ http://wikiazure.com/compute/migrar-vhd-a-azure-con-powershell/
